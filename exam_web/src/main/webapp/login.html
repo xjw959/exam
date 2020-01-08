@@ -1,0 +1,60 @@
+<html/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>登录</title>
+<script src="https://gitee.com/x5w/xjw_work/raw/master/vue.js"></script>
+<script src="https://gitee.com/x5w/xjw_work/raw/master/vue-resource.min.js"></script>
+</head>
+<script>
+window.onload = function () {
+	new Vue({
+		el:'#login',
+		data:{
+			user:{}
+		},
+		methods:{
+			login:function()
+			{
+				this.$http.post("login.do",this.user).then(function(obj){
+					console.log(obj);
+					if(obj.body.data.stuts==0)
+						{
+							location.href="stulist.html";
+						}else if(obj.body.data.stuts==1)
+							{
+								location.href="userlist.html"
+							}
+				})
+			}
+		}
+	})
+}
+</script>
+<body>
+
+	<div id="login">
+		<table>
+		
+			<tr>
+			<td>用户名</td>
+			<td>
+				<input type="text" v-model="user.username">
+			</td>
+			</tr>
+			<tr>
+				<td>密码</td>
+				<td>
+					<input type="password" v-model="user.password">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2">
+					<input type="button" @click="login()" value="登录">
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+</html>

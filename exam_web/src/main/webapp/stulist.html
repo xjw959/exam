@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://gitee.com/x5w/xjw_work/raw/master/vue.js"></script>
+<script src="https://gitee.com/x5w/xjw_work/raw/master/vue-resource.min.js"></script>
+</head>
+<script>
+window.onload = function () {
+	new Vue({
+		el:'#list',
+		data:{
+			list:{},
+			id:""
+		},
+		methods:{
+			getlist:function()
+			{
+				console.log(this.keyword)
+				this.$http.post("orderList.do").then(function(obj){
+					console.log(obj)
+					this.list=obj.body.data
+				})
+			},
+			add:function()
+			{
+				location.href="stuadd.html#id="+id;
+			}
+			
+		},
+		created:function()
+		{
+			this.getlist();
+		}
+	})
+}
+</script>
+<body>
+<div id="list">
+	<table>
+		<tr>
+			<td>
+				<input type="text" ng-model="id"/>
+				<input type="button" value="购买商品" @click="add()">
+			</td>
+		</tr>
+		<tr>
+			<td>课程编号</td>
+			<td>课程名称</td>
+			<td>课程类别</td>
+			<td>课时</td>
+			<td>讲课老师</td>
+			<td>开课日期</td>
+			<td>状态</td>
+			<td>操作</td>
+		</tr>
+		<tr v-for="pojo in list">
+			<td>{{pojo.number}}</td>
+			<td>{{pojo.name}}</td>
+			<td>{{pojo.type}}</td>
+			<td>
+				{{pojo.time}}
+			</td>
+			<td>{{pojo.pople}}</td>
+			<td>{{pojo.date}}</td>
+			
+			<td>
+			</td>
+		</tr>
+		<tr>
+		<!-- <td colspan="12">
+		<input type="button" @click="getlist(1,3)" value="首页">
+		<input type="button" @click="getlist(page-1,3)" value="上一页">
+		<input type="button" @click="getlist(page+1,3)" value="下一页">
+		</td> -->
+		</tr>
+	</table>
+	
+</div>
+</body>
+</html>
